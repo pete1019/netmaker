@@ -39,8 +39,10 @@ metadata:
     {{- end }}
   {{- end }}
 spec:
+  {{- if (not (eq .Values.ingress.className "traefik")) }}
   {{- if and .Values.ingress.className (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion) }}
   ingressClassName: {{ required "A valid .Values.ingress.className entry required!" .Values.ingress.className}}
+  {{- end }}
   {{- end }}
   {{- if .Values.ingress.tls.enabled }}
   tls:
@@ -94,8 +96,10 @@ metadata:
     {{- end }}
   {{- end }}
 spec:
+  {{- if (not (eq .Values.ingress.className "traefik")) }}
   {{- if and .Values.ingress.className (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion) }}
   ingressClassName:  {{ required "A valid .Values.ingress.className entry required!" .Values.ingress.className}}
+  {{- end }}
   {{- end }}
   {{- if .Values.ingress.tls.enabled }}
   tls:
@@ -151,8 +155,10 @@ metadata:
     {{- end }}
   {{- end }}
 spec:
+  {{- if (not (eq .Values.ingress.className "traefik")) }}
   {{- if and .Values.ingress.className (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion) }}
   ingressClassName:  {{ required "A valid .Values.ingress.className entry required!" .Values.ingress.className}}
+  {{- end }}
   {{- end }}
   {{- if .Values.ingress.tls.enabled }}
   tls:
