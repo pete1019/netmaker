@@ -38,6 +38,9 @@ ui:
   # -- how many UI replicas to create
   replicas: 2
 
+setIpForwarding:
+  enabled: true
+
 service:
   # -- type for netmaker server services
   type: ClusterIP
