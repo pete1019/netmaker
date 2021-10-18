@@ -110,6 +110,8 @@ postgresql-ha:
     password: netmaker
     # -- postgress db to generate
     database: netmaker
+    # -- postgress number of replicas to deploy
+    replicaCount: 2
   persistence:
     # -- size of postgres DB
     size: 3Gi

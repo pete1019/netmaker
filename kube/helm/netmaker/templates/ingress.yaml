@@ -27,14 +27,15 @@ metadata:
   {{- with .Values.ingress }}
   annotations:
     {{- toYaml .annotations.base | nindent 4 }}
-    {{- if eq .className "nginx" }}
+    {{- if or (eq .className "nginx") (eq .className "public") }}
     {{- toYaml .annotations.nginx | nindent 4 }}
     {{- end }}
     {{- if eq .className "traefik" }}
     {{- toYaml .annotations.traefik | nindent 4 }}
     {{- end }}
-    {{- if .tls.enabled }}
+    {{- if and .tls.enabled (eq .tls.issuerName "" )}}
     {{- toYaml .annotations.tls | nindent 4 }}
+    {{- else if .tls.enabled}}
     cert-manager.io/cluster-issuer: {{ .tls.issuerName }}
     {{- end }}
   {{- end }}
@@ -84,14 +85,15 @@ metadata:
   {{- with .Values.ingress }}
   annotations:
     {{- toYaml .annotations.base | nindent 4 }}
-    {{- if eq .className "nginx" }}
+    {{- if or (eq .className "nginx") (eq .className "public") }}
     {{- toYaml .annotations.nginx | nindent 4 }}
     {{- end }}
     {{- if eq .className "traefik" }}
     {{- toYaml .annotations.traefik | nindent 4 }}
     {{- end }}
-    {{- if .tls.enabled }}
+    {{- if and .tls.enabled (eq .tls.issuerName "" )}}
     {{- toYaml .annotations.tls | nindent 4 }}
+    {{- else if .tls.enabled}}
     cert-manager.io/cluster-issuer: {{ .tls.issuerName }}
     {{- end }}
   {{- end }}
@@ -141,7 +143,7 @@ metadata:
   {{- with .Values.ingress }}
   annotations:
     {{- toYaml .annotations.base | nindent 4 }}
-    {{- if eq .className "nginx" }}
+    {{- if or (eq .className "nginx") (eq .className "public") }}
     {{- toYaml .annotations.nginx | nindent 4 }}
     {{- toYaml .annotations.grpc.nginx | nindent 4 }}
     {{- end }}
@@ -149,8 +151,9 @@ metadata:
     {{- toYaml .annotations.traefik | nindent 4 }}
     {{- toYaml .annotations.grpc.traefik | nindent 4 }}
     {{- end }}
-    {{- if .tls.enabled }}
+    {{- if and .tls.enabled (eq .tls.issuerName "" )}}
     {{- toYaml .annotations.tls | nindent 4 }}
+    {{- else if .tls.enabled}}
     cert-manager.io/cluster-issuer: {{ .tls.issuerName }}
     {{- end }}
   {{- end }}
